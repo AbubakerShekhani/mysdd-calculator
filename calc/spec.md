@@ -11,16 +11,24 @@ This document outlines the complete specification for the basic calculator modul
 5.  **Scoped:** Explicitly states what's out of scope
 6.  **Unambiguous:** No room for interpretation (e.g., "division always returns float")
 
-## 2. User Stories & Acceptance Criteria
+## 2. General Behavior
+
+### Return Types
+For `add`, `subtract`, and `multiply`, the return type will be `float` if any of the input operands is a `float`. The return type will be `int` only if all inputs are integers. The `divide` function always returns a `float`.
+
+### Floating-Point Precision (IEEE 754)
+All operations involving floats adhere to standard IEEE 754 floating-point arithmetic. This means that some operations may have small precision errors. For example, `0.1 + 0.2` will result in a value that is approximately `0.3` (e.g., `0.30000000000000004`).
+
+## 3. User Stories & Acceptance Criteria
 
 ### User Story: Addition
 
 > As a developer, I want to add two numbers, so that I can find their sum.
 
 **Function Signature:**
-```python
+`--
 def add(a: int | float, b: int | float) -> int | float:
-```
+`--
 
 **Acceptance Criteria:**
 
@@ -40,27 +48,22 @@ def add(a: int | float, b: int | float) -> int | float:
     *   THEN the result is `7.5`
 
 *   **Edge case (zero)**
-    *   GIVEN a number `a = 10` and `b = 0`
+    *   GIVEN an integer `a = 10` and `b = 0`
     *   WHEN the `add` function is called with `a` and `b`
     *   THEN the result is `10`
 
 *   **Edge case (negative numbers)**
-    *   GIVEN two negative numbers `a = -10` and `b = -5`
+    *   GIVEN two negative integers `a = -10` and `b = -5`
     *   WHEN the `add` function is called with `a` and `b`
     *   THEN the result is `-15`
 
 *   **Edge case (large numbers)**
-    *   GIVEN two large numbers `a = 1_000_000_000` and `b = 2_000_000_000`
+    *   GIVEN two large integers `a = 1_000_000_000` and `b = 2_000_000_000`
     *   WHEN the `add` function is called with `a` and `b`
     *   THEN the result is `3_000_000_000`
 
-*   **Edge case (floating-point precision - IEEE 754)**
-    *   GIVEN two floats `a = 0.1` and `b = 0.2`
-    *   WHEN the `add` function is called with `a` and `b`
-    *   THEN the result is approximately `0.3` (e.g., `0.30000000000000004`).
-
 *   **Error case (invalid types)**
-    *   GIVEN a number `a = 10` and a string `b = "5"`
+    *   GIVEN an integer `a = 10` and a string `b = "5"`
     *   WHEN the `add` function is called with `a` and `b`
     *   THEN a `TypeError` is raised
 
@@ -69,9 +72,9 @@ def add(a: int | float, b: int | float) -> int | float:
 > As a developer, I want to subtract two numbers, so that I can find their difference.
 
 **Function Signature:**
-```python
+`--
 def subtract(a: int | float, b: int | float) -> int | float:
-```
+`--
 
 **Acceptance Criteria:**
 
@@ -86,12 +89,12 @@ def subtract(a: int | float, b: int | float) -> int | float:
     *   THEN the result is `-5`
 
 *   **Edge case (negative numbers)**
-    *   GIVEN two negative numbers `a = -10` and `b = -5`
+    *   GIVEN two negative integers `a = -10` and `b = -5`
     *   WHEN the `subtract` function is called with `a` and `b`
     *   THEN the result is `-5`
 
 *   **Error case (invalid types)**
-    *   GIVEN a number `a = 10` and a string `b = "5"`
+    *   GIVEN an integer `a = 10` and a string `b = "5"`
     *   WHEN the `subtract` function is called with `a` and `b`
     *   THEN a `TypeError` is raised
 
@@ -100,9 +103,9 @@ def subtract(a: int | float, b: int | float) -> int | float:
 > As a developer, I want to multiply two numbers, so that I can find their product.
 
 **Function Signature:**
-```python
+`--
 def multiply(a: int | float, b: int | float) -> int | float:
-```
+`--
 
 **Acceptance Criteria:**
 
@@ -112,17 +115,17 @@ def multiply(a: int | float, b: int | float) -> int | float:
     *   THEN the result is `50`
 
 *   **Edge case (zero)**
-    *   GIVEN a number `a = 10` and `b = 0`
+    *   GIVEN an integer `a = 10` and `b = 0`
     *   WHEN the `multiply` function is called with `a` and `b`
     *   THEN the result is `0`
 
 *   **Edge case (negative number)**
-    *   GIVEN a positive number `a = 10` and a negative number `b = -5`
+    *   GIVEN a positive integer `a = 10` and a negative integer `b = -5`
     *   WHEN the `multiply` function is called with `a` and `b`
     *   THEN the result is `-50`
 
 *   **Error case (invalid types)**
-    *   GIVEN a number `a = 10` and a string `b = "5"`
+    *   GIVEN an integer `a = 10` and a string `b = "5"`
     *   WHEN the `multiply` function is called with `a` and `b`
     *   THEN a `TypeError` is raised
 
@@ -133,10 +136,9 @@ def multiply(a: int | float, b: int | float) -> int | float:
 > As a developer, I want to be notified when I try to divide by zero, so that I can handle the error gracefully.
 
 **Function Signature:**
-```python
+`--
 def divide(a: int | float, b: int | float) -> float:
-```
-**Note:** Division *always* returns a `float`.
+`--
 
 **Acceptance Criteria:**
 
@@ -151,21 +153,21 @@ def divide(a: int | float, b: int | float) -> float:
     *   THEN the result is `2.5`
 
 *   **Edge case (zero numerator)**
-    *   GIVEN `a = 0` and `b = 10`
+    *   GIVEN an integer `a = 0` and an integer `b = 10`
     *   WHEN the `divide` function is called with `a` and `b`
     *   THEN the result is `0.0`
 
 *   **Error case (division by zero)**
-    *   GIVEN a number `a = 10` and `b = 0`
+    *   GIVEN an integer `a = 10` and `b = 0`
     *   WHEN the `divide` function is called with `a` and `b`
     *   THEN a `ValueError` is raised with the message "Cannot divide by zero."
 
 *   **Error case (invalid types)**
-    *   GIVEN a number `a = 10` and a string `b = "2"`
+    *   GIVEN an integer `a = 10` and a string `b = "2"`
     *   WHEN the `divide` function is called with `a` and `b`
     *   THEN a `TypeError` is raised
 
-## 3. Out of Scope
+## 4. Out of Scope
 
 The following items are explicitly out of scope for this module:
 
