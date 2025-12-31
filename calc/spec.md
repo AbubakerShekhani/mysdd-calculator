@@ -167,6 +167,68 @@ def divide(a: int | float, b: int | float) -> float:
     *   WHEN the `divide` function is called with `a` and `b`
     *   THEN a `TypeError` is raised
 
+### User Story: Power (Exponentiation)
+
+> As a developer, I want to raise a base number to the power of an exponent, so that I can perform exponentiation calculations for things like compound interest or geometric progressions.
+
+**Function Signature:**
+`--
+def power(base: int | float, exponent: int | float) -> int | float:
+`--
+**Note:** The return type follows the same rules as `add` and `multiply`: it will be a `float` if `exponent` is negative or if any input is a `float`. It will be an `int` only if both inputs are integers and the result is a whole number.
+
+**Acceptance Criteria:**
+
+*   **Happy path (integer exponent)**
+    *   GIVEN an integer base `base = 2` and an integer exponent `exponent = 10`
+    *   WHEN `power(base, exponent)` is called
+    *   THEN the result is `1024`
+
+*   **Happy path (float exponent for roots)**
+    *   GIVEN an integer base `base = 9` and a float exponent `exponent = 0.5`
+    *   WHEN `power(base, exponent)` is called
+    *   THEN the result is `3.0`
+
+*   **Happy path (negative exponent)**
+    *   GIVEN an integer base `base = 4` and a negative exponent `exponent = -2`
+    *   WHEN `power(base, exponent)` is called
+    *   THEN the result is `0.0625`
+
+*   **Edge case (exponent is one)**
+    *   GIVEN a base `base = 27` and an exponent `exponent = 1`
+    *   WHEN `power(base, exponent)` is called
+    *   THEN the result is `27`
+
+*   **Edge case (exponent is zero)**
+    *   GIVEN a base `base = 27` and an exponent `exponent = 0`
+    *   WHEN `power(base, exponent)` is called
+    *   THEN the result is `1`
+
+*   **Edge case (base is zero)**
+    *   GIVEN a base `base = 0` and an exponent `exponent = 10`
+    *   WHEN `power(base, exponent)` is called
+    *   THEN the result is `0`
+
+*   **Edge case (0 to the power of 0)**
+    *   GIVEN a base `base = 0` and an exponent `exponent = 0`
+    *   WHEN `power(base, exponent)` is called
+    *   THEN the result is `1` (by programming convention).
+
+*   **Edge case (large result)**
+    *   GIVEN a base `base = 2` and an exponent `exponent = 1000`
+    *   WHEN `power(base, exponent)` is called
+    *   THEN the function returns the correct large integer result without overflow.
+
+*   **Error case (negative base with fractional exponent)**
+    *   GIVEN a negative base `base = -4` and a fractional exponent `exponent = 0.5`
+    *   WHEN `power(base, exponent)` is called
+    *   THEN a `ValueError` is raised with the message "Complex numbers are not supported (negative base with fractional exponent)."
+
+*   **Error case (invalid types)**
+    *   GIVEN a base `base = 9` and an exponent `exponent = "2"`
+    *   WHEN `power(base, exponent)` is called
+    *   THEN a `TypeError` is raised.
+
 ## 4. Out of Scope
 
 The following items are explicitly out of scope for this module:
